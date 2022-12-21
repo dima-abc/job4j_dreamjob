@@ -1,5 +1,7 @@
 package ru.my.dreamjob;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -14,7 +16,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class DreamJobApp {
+    private static final Logger LOG = LoggerFactory.getLogger(DreamJobApp.class.getSimpleName());
+    private static final String START_PAGE = "http://localhost:8080/index";
     public static void main(String[] args) {
         SpringApplication.run(DreamJobApp.class, args);
+        LOG.info("Go to: {}", START_PAGE);
     }
 }
