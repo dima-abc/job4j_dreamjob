@@ -23,7 +23,7 @@ import ru.my.dreamjob.repository.VacancyRepository;
 public class VacancyController {
     private final VacancyRepository vacancyRepository = MemoryVacancyRepository.getInstance();
 
-    @GetMapping("/")
+    @GetMapping
     public String getAllVacancy(Model model) {
         model.addAttribute("vacancies", vacancyRepository.findAll());
         return "vacancies/list";

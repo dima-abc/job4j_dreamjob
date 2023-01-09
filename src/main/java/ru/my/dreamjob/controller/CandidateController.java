@@ -22,7 +22,7 @@ import ru.my.dreamjob.repository.MemoryCandidateRepository;
 public class CandidateController {
     private final MemoryCandidateRepository candidates = MemoryCandidateRepository.getInstance();
 
-    @GetMapping("/")
+    @GetMapping
     public String getAllCandidate(Model model) {
         model.addAttribute("candidates", candidates.findAll());
         return "candidates/list";
