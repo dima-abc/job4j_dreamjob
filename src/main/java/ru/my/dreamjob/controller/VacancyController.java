@@ -13,7 +13,8 @@ import ru.my.dreamjob.repository.VacancyRepository;
  * 3.2.2. Html, Bootstrap, Thymeleaf
  * 4. Thymeleaf, Циклы. [#504841 #281377]
  * VacancyController контроллер отображения и управления видом вакансий.
- * Работать с кандидатами будем по URI /vacancies/
+ * Работать с вакансиями будем по URI /vacancies/
+ *
  * @author Dmitry Stepanov, user Dmitry
  * @since 09.01.2023
  */
@@ -21,6 +22,7 @@ import ru.my.dreamjob.repository.VacancyRepository;
 @RequestMapping("/vacancies")
 public class VacancyController {
     private final VacancyRepository vacancyRepository = MemoryVacancyRepository.getInstance();
+
     @GetMapping("/")
     public String getAllVacancy(Model model) {
         model.addAttribute("vacancies", vacancyRepository.findAll());

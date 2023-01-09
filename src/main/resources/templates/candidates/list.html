@@ -22,23 +22,23 @@
 </head>
 <body>
 <div class="container">
-    <h1>Вакансии</h1>
+    <h1>Кандидаты на должность</h1>
     <div class="row">
         <table class="table">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Имя</th>
-                <th scope="col">Описание</th>
+                <th scope="col">Кандидат</th>
+                <th scope="col">Должность</th>
                 <th scope="col">Дата создания</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="vacancy: ${vacancies}">
-                <td th:text="${vacancy.id}"/>
-                <td th:text="${vacancy.title}"/>
-                <td th:text="${vacancy.description}"/>
-                <td th:text="${#temporals.format(vacancy.createDate, 'dd MMMM yyyy HH:MM:SS')}"/>
+            <tr th:each="candidate:${candidates}">
+                <td th:text="${candidate.id}"/>
+                <td th:text="${candidate.name}"/>
+                <td th:text="${candidate.description}"/>
+                <td th:text="${#temporals.format(candidate.createDate, 'dd MMMM yyyy HH:MM:SS')}"/>
             </tr>
             </tbody>
         </table>
