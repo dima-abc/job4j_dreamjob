@@ -28,6 +28,7 @@
                     <a class="nav-item nav-link" th:href="@{/vacancies}">Вакансии</a>
                     <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
                     <a class="nav-item nav-link active" th:href="@{/vacancies/create}">Создать вакансию</a>
+                    <a class="nav-item nav-link" th:href="@{/candidates/create}">Создать кандидата</a>
                 </div>
             </div>
         </div>
@@ -37,11 +38,11 @@
             <div class="mb-3">
                 <label for="title" class="form-label"><b>Название</b></label>
                 <input type="text" class="form-control" id="title"
-                       placeholder="Предлагая должность, например, Ведущий Java разработчик">
+                       placeholder="Предлагаемая должность, например, Ведущий Java разработчик">
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label"><b>Описание</b></label>
-                <textarea class="form-control" id="description" rows="25"
+                <textarea class="form-control" id="description" rows="10"
                           placeholder="Опишите требования к кандидату"></textarea>
             </div>
             <div class="md-3 row">

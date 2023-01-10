@@ -30,7 +30,7 @@ public class VacancyController {
     }
 
     @GetMapping("/create")
-    public String getCreationPage() {
+    public String getCreationPageVacancy() {
         return "vacancies/create";
     }
 }
