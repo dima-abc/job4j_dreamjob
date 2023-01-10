@@ -19,6 +19,9 @@ public class Vacancy {
     private String description;
     private LocalDateTime createDate = LocalDateTime.now().withNano(0);
 
+    public Vacancy() {
+    }
+
     public Vacancy(int id, String title, String description) {
         this.id = id;
         this.title = title;

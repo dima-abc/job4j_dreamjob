@@ -3,9 +3,15 @@ package ru.my.dreamjob.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.my.dreamjob.model.Vacancy;
 import ru.my.dreamjob.repository.MemoryVacancyRepository;
 import ru.my.dreamjob.repository.VacancyRepository;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 3. Мидл
@@ -32,5 +38,11 @@ public class VacancyController {
     @GetMapping("/create")
     public String getCreationPageVacancy() {
         return "vacancies/create";
+    }
+
+    @PostMapping("/create")
+    public String createVacancy(@ModelAttribute Vacancy vacancy) {
+        vacancyRepository.save(vacancy);
+        return "redirect:/vacancies";
     }
 }
