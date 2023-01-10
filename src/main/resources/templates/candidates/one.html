@@ -15,7 +15,7 @@
             integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
             crossorigin="anonymous"></script>
 
-    <title>Создание кандидата</title>
+    <title>Редактирование кандидата</title>
 </head>
 <body>
 <div class="container-fluid p-0">
@@ -28,30 +28,33 @@
                     <a class="nav-item nav-link" th:href="@{/vacancies}">Вакансии</a>
                     <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
                     <a class="nav-item nav-link" th:href="@{/vacancies/create}">Создать вакансию</a>
-                    <a class="nav-item nav-link active" th:href="@{/candidates/create}">Создать кандидата</a>
+                    <a class="nav-item nav-link" th:href="@{/candidates/create}">Создать кандидата</a>
                 </div>
             </div>
         </div>
     </nav>
     <div class="container">
-        <form class="mt-3" th:action="@{/candidates/create}" method="post">
+        <form class="mt-3" th:action="@{/candidates/update}" method="post" th:object="${candidate}">
+            <input type="hidden" name="id" th:field="*{id}">
             <div class="mb-3">
-                <label for="name" class="form-label"><b>Имя кандидата</b></label>
-                <input type="text" class="form-control" id="name" name="name"
+                <label for="name" class="form-label"><b>ФИО кандидата</b></label>
+                <input type="text" class="form-control" id="name" name="name" th:field="*{name}"
                        placeholder="ФИО кандидата на должность">
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label"><b>Желаемая должность</b></label>
-                <textarea class="form-control" rows="10" id="description" name="description"
+                <label for="description" class="form-label"><b>Описание</b></label>
+                <textarea class="form-control" rows="10" id="description" name="description" th:field="*{description}"
                           placeholder="Опишите вашу специальность и опыт"></textarea>
             </div>
-            <div class="md-3 row">
+            <div class="mb-3 row">
                 <div class="col-6"></div>
                 <div class="col-6">
                     <div class="row">
-                        <div class="col-6"><a class="btn btn-danger w-100" th:href="@{/candidates}">Отменить</a></div>
-                        <div class="col-6">
-                            <button class="btn btn-primary w-100" type="submit">Сохранить</button>
+                        <div class="col-4"><a class="btn btn-light w-100" th:href="@{/candidates}">Отмена</a></div>
+                        <div class="col-4"><a class="btn btn-danger w-100"
+                                              th:href="@{/candidates/delete/{id}(id=${candidate.id})}">Удалить</a></div>
+                        <div class="col-4">
+                            <button class="btn btn-success w-100" type="submit">Обновить</button>
                         </div>
                     </div>
                 </div>
