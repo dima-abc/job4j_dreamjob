@@ -4,11 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.my.dreamjob.model.Vacancy;
-import ru.my.dreamjob.repository.MemoryVacancyRepository;
-import ru.my.dreamjob.repository.VacancyRepository;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import ru.my.dreamjob.service.SimpleVacancyService;
+import ru.my.dreamjob.service.VacancyService;
 
 /**
  * 3. Мидл
@@ -17,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
  * 4. Thymeleaf, Циклы. [#504841 #281377]
  * VacancyController контроллер отображения и управления видом вакансий.
  * Работать с вакансиями будем по URI /vacancies/
+ * 3.2.4. Архитектура Web приложений
+ * 1. Слоеная архитектура. [#504851 #283148]
  *
  * @author Dmitry Stepanov, user Dmitry
  * @since 09.01.2023
@@ -24,11 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/vacancies")
 public class VacancyController {
-    private final VacancyRepository vacancyRepository = MemoryVacancyRepository.getInstance();
+    private final VacancyService vacancyService = SimpleVacancyService.getInstance();
 
     @GetMapping
     public String getAllVacancy(Model model) {
-        model.addAttribute("vacancies", vacancyRepository.findAll());
+        model.addAttribute("vacancies", vacancyService.findAll());
         return "vacancies/list";
     }
 
@@ -39,13 +38,13 @@ public class VacancyController {
 
     @PostMapping("/create")
     public String createVacancy(@ModelAttribute Vacancy vacancy) {
-        vacancyRepository.save(vacancy);
+        vacancyService.save(vacancy);
         return "redirect:/vacancies";
     }
 
     @GetMapping("/{id}")
     public String getByIdVacancy(Model model, @PathVariable int id) {
-        var vacancyOptional = vacancyRepository.findById(id);
+        var vacancyOptional = vacancyService.findById(id);
         if (vacancyOptional.isEmpty()) {
             model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
             return "errors/404";
@@ -56,7 +55,7 @@ public class VacancyController {
 
     @PostMapping("/update")
     public String updateVacancy(@ModelAttribute Vacancy vacancy, Model model) {
-        var isUpdate = vacancyRepository.update(vacancy);
+        var isUpdate = vacancyService.update(vacancy);
         if (!isUpdate) {
             model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
             return "errors/404";
@@ -66,7 +65,7 @@ public class VacancyController {
 
     @GetMapping("/delete/{id}")
     public String delete(Model model, @PathVariable int id) {
-        var isDeleted = vacancyRepository.deleteById(id);
+        var isDeleted = vacancyService.deleteById(id);
         if (!isDeleted) {
             model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
             return "errors/404";

@@ -2,7 +2,6 @@ package ru.my.dreamjob.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.my.dreamjob.model.Candidate;
-import ru.my.dreamjob.model.Vacancy;
 
 import java.util.Collection;
 import java.util.HashMap;
