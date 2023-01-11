@@ -17,15 +17,17 @@ public class Vacancy {
     private int id;
     private String title;
     private String description;
+    private boolean visible;
     private LocalDateTime createDate = LocalDateTime.now().withNano(0);
 
     public Vacancy() {
     }
 
-    public Vacancy(int id, String title, String description) {
+    public Vacancy(int id, String title, String description, boolean visible) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.visible = visible;
     }
 
     public int getId() {
@@ -60,6 +62,14 @@ public class Vacancy {
         this.createDate = createDate;
     }
 
+    public boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -79,6 +89,8 @@ public class Vacancy {
 
     @Override
     public String toString() {
-        return "Vacancy{id=" + id + ", title='" + title + '\'' + '}';
+        return "Vacancy{id=" + id + ", title='" + title + '\''
+                + ", description='" + description + '\'' + ", visible=" + visible
+                + ", createDate=" + createDate + '}';
     }
 }
