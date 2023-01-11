@@ -17,15 +17,17 @@ public class Candidate {
     private int id;
     private String name;
     private String description;
+    private int cityId;
     private LocalDateTime createDate = LocalDateTime.now().withNano(0);
 
     public Candidate() {
     }
 
-    public Candidate(int id, String name, String description) {
+    public Candidate(int id, String name, String description, int cityId) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.cityId = cityId;
     }
 
     public int getId() {
@@ -60,6 +62,14 @@ public class Candidate {
         this.createDate = createDate;
     }
 
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -79,7 +89,7 @@ public class Candidate {
 
     @Override
     public String toString() {
-        return "Candidate{id=" + id + ", name='" + name + '\''
-                + ", description='" + description + '\'' + ", createDate=" + createDate + '}';
+        return "Candidate{id=" + id + ", name='" + name + '\'' + ", description='" + description + '\''
+                + ", cityId=" + cityId + ", createDate=" + createDate + '}';
     }
 }

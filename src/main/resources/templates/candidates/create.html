@@ -45,6 +45,12 @@
                 <textarea class="form-control" rows="10" id="description" name="description"
                           placeholder="Опишите вашу специальность и опыт"></textarea>
             </div>
+            <div class="mb-3">
+                <label for="city"><b>Город</b></label>
+                <select class="form-control" id="city" name="cityId">
+                    <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
+                </select>
+            </div>
             <div class="md-3 row">
                 <div class="col-6"></div>
                 <div class="col-6">
