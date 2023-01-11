@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.my.dreamjob.model.Vacancy;
-import ru.my.dreamjob.service.SimpleVacancyService;
 import ru.my.dreamjob.service.VacancyService;
 
 /**
@@ -23,7 +22,11 @@ import ru.my.dreamjob.service.VacancyService;
 @Controller
 @RequestMapping("/vacancies")
 public class VacancyController {
-    private final VacancyService vacancyService = SimpleVacancyService.getInstance();
+    private final VacancyService vacancyService;
+
+    public VacancyController(VacancyService vacancyService) {
+        this.vacancyService = vacancyService;
+    }
 
     @GetMapping
     public String getAllVacancy(Model model) {
