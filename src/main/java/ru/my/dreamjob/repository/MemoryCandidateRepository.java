@@ -1,5 +1,7 @@
 package ru.my.dreamjob.repository;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.my.dreamjob.model.Candidate;
 
@@ -7,6 +9,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 3. Мидл
@@ -19,10 +23,11 @@ import java.util.Optional;
  * @since 09.01.2023
  */
 @Repository
+@ThreadSafe
 public class MemoryCandidateRepository implements CandidateRepository {
-    private int nextId = 1;
-
-    private final Map<Integer, Candidate> candidates = new HashMap<>();
+    @GuardedBy("this")
+    private final AtomicInteger nextId = new AtomicInteger(0);
+    private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
 
     public MemoryCandidateRepository() {
         save(new Candidate(0, "Ivan I.I.", "Intern JAVA Developer"));
@@ -35,9 +40,8 @@ public class MemoryCandidateRepository implements CandidateRepository {
 
     @Override
     public Candidate save(Candidate candidate) {
-        candidate.setId(nextId++);
-        candidates.put(candidate.getId(), candidate);
-        return candidate;
+        return candidates.computeIfAbsent(nextId.incrementAndGet(),
+                key -> new Candidate(key, candidate.getName(), candidate.getDescription()));
     }
 
     @Override
