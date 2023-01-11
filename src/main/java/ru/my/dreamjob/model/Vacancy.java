@@ -18,16 +18,20 @@ public class Vacancy {
     private String title;
     private String description;
     private boolean visible;
+    private int cityId;
     private LocalDateTime createDate = LocalDateTime.now().withNano(0);
 
     public Vacancy() {
     }
 
-    public Vacancy(int id, String title, String description, boolean visible) {
+    public Vacancy(int id, String title,
+                   String description, boolean visible,
+                   int cityId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.visible = visible;
+        this.cityId = cityId;
     }
 
     public int getId() {
@@ -70,6 +74,14 @@ public class Vacancy {
         this.visible = visible;
     }
 
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -90,7 +102,8 @@ public class Vacancy {
     @Override
     public String toString() {
         return "Vacancy{id=" + id + ", title='" + title + '\''
-                + ", description='" + description + '\'' + ", visible=" + visible
+                + ", description='" + description + '\''
+                + ", visible=" + visible + ", cityId=" + cityId
                 + ", createDate=" + createDate + '}';
     }
 }
