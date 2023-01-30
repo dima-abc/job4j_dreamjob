@@ -1,7 +1,5 @@
 package ru.my.dreamjob.controller;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -11,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.my.dreamjob.model.Vacancy;
 import ru.my.dreamjob.model.dto.FileDto;
 import ru.my.dreamjob.service.CityService;
-import ru.my.dreamjob.service.FileService;
 import ru.my.dreamjob.service.VacancyService;
 
 /**

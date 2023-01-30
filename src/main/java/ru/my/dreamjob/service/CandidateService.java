@@ -1,6 +1,7 @@
 package ru.my.dreamjob.service;
 
 import ru.my.dreamjob.model.Candidate;
+import ru.my.dreamjob.model.dto.FileDto;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -17,11 +18,11 @@ import java.util.Optional;
  * @since 10.01.2023
  */
 public interface CandidateService {
-    Candidate save(Candidate candidate);
+    Candidate save(Candidate candidate, FileDto image);
 
     boolean deleteById(int id);
 
-    boolean update(Candidate candidate);
+    boolean update(Candidate candidate, FileDto image);
 
     Optional<Candidate> findById(int id);
 

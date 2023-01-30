@@ -18,16 +18,22 @@ public class Candidate {
     private String name;
     private String description;
     private int cityId;
+    private int fileId;
     private LocalDateTime createDate = LocalDateTime.now().withNano(0);
 
     public Candidate() {
     }
 
-    public Candidate(int id, String name, String description, int cityId) {
+    public Candidate(int id,
+                     String name,
+                     String description,
+                     int cityId,
+                     int fileId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.cityId = cityId;
+        this.fileId = fileId;
     }
 
     public int getId() {
@@ -70,6 +76,14 @@ public class Candidate {
         this.cityId = cityId;
     }
 
+    public int getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(int fileId) {
+        this.fileId = fileId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -90,6 +104,6 @@ public class Candidate {
     @Override
     public String toString() {
         return "Candidate{id=" + id + ", name='" + name + '\'' + ", description='" + description + '\''
-                + ", cityId=" + cityId + ", createDate=" + createDate + '}';
+                + ", cityId=" + cityId + ", fileId=" + fileId + ", createDate=" + createDate + '}';
     }
 }

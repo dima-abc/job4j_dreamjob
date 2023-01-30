@@ -1,10 +1,11 @@
 package ru.my.dreamjob.controller;
 
-import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.my.dreamjob.model.Candidate;
+import ru.my.dreamjob.model.dto.FileDto;
 import ru.my.dreamjob.service.CandidateService;
 import ru.my.dreamjob.service.CityService;
 
@@ -23,7 +24,6 @@ import ru.my.dreamjob.service.CityService;
  */
 @Controller
 @RequestMapping("/candidates")
-@ThreadSafe
 public class CandidateController {
     private final CandidateService candidateService;
     private final CityService cityService;
@@ -47,9 +47,17 @@ public class CandidateController {
     }
 
     @PostMapping("/create")
-    public String createCandidate(@ModelAttribute Candidate candidate) {
-        candidateService.save(candidate);
+    public String createCandidate(@ModelAttribute Candidate candidate,
+                                  @RequestParam MultipartFile file,
+                                  Model model) {
+        try {
+            candidateService.save(candidate,
+                    new FileDto(file.getOriginalFilename(), file.getBytes()));
         return "redirect:/candidates";
+        } catch (Exception exception) {
+            model.addAttribute("message", exception.getMessage());
+            return "errors/404";
+        }
     }
 
     @GetMapping("/{id}")
@@ -65,13 +73,21 @@ public class CandidateController {
     }
 
     @PostMapping("/update")
-    public String updateCandidate(@ModelAttribute Candidate candidate, Model model) {
-        var isUpdate = candidateService.update(candidate);
-        if (!isUpdate) {
-            model.addAttribute("message", "Кандидат с указанным идентификатором не найдена");
+    public String updateCandidate(@ModelAttribute Candidate candidate,
+                                  MultipartFile file,
+                                  Model model) {
+        try {
+            var isUpdate = candidateService.update(candidate,
+                    new FileDto(file.getOriginalFilename(), file.getBytes()));
+            if (!isUpdate) {
+                model.addAttribute("message", "Кандидат с указанным идентификатором не найдена");
+                return "errors/404";
+            }
+            return "redirect:/candidates";
+        } catch (Exception exception) {
+            model.addAttribute("message", exception.getMessage());
             return "errors/404";
         }
-        return "redirect:/candidates";
     }
 
     @GetMapping("/delete/{id}")

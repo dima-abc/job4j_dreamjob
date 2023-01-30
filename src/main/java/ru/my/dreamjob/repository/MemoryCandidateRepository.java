@@ -27,18 +27,22 @@ public class MemoryCandidateRepository implements CandidateRepository {
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
 
     public MemoryCandidateRepository() {
-        save(new Candidate(0, "Ivan I.I.", "Intern JAVA Developer", 1));
-        save(new Candidate(0, "Sidorov V.I.", "Junior Java Developer", 2));
-        save(new Candidate(0, "Kholodkov R.S.", "Junior+ Java Developer", 3));
-        save(new Candidate(0, "Mishin V.V.", "Middle Java Developer", 1));
-        save(new Candidate(0, "Karpun S.V.", "Middle+ Java Developer", 2));
-        save(new Candidate(0, "Farsh D.V.", "Senior Java Developer", 3));
+        save(new Candidate(0, "Ivan I.I.", "Intern JAVA Developer", 1, 0));
+        save(new Candidate(0, "Sidorov V.I.", "Junior Java Developer", 2, 0));
+        save(new Candidate(0, "Kholodkov R.S.", "Junior+ Java Developer", 3, 0));
+        save(new Candidate(0, "Mishin V.V.", "Middle Java Developer", 1, 0));
+        save(new Candidate(0, "Karpun S.V.", "Middle+ Java Developer", 2, 0));
+        save(new Candidate(0, "Farsh D.V.", "Senior Java Developer", 3, 0));
     }
 
     @Override
     public Candidate save(Candidate candidate) {
         return candidates.computeIfAbsent(nextId.incrementAndGet(),
-                key -> new Candidate(key, candidate.getName(), candidate.getDescription(), candidate.getCityId()));
+                key -> new Candidate(key,
+                        candidate.getName(),
+                        candidate.getDescription(),
+                        candidate.getCityId(),
+                        candidate.getFileId()));
     }
 
     @Override
@@ -54,7 +58,8 @@ public class MemoryCandidateRepository implements CandidateRepository {
                         oldCandidate.getId(),
                         candidate.getName(),
                         candidate.getDescription(),
-                        candidate.getCityId()
+                        candidate.getCityId(),
+                        candidate.getFileId()
                 )) != null;
     }
 
