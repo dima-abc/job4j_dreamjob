@@ -1,5 +1,6 @@
 package ru.my.dreamjob.repository;
 
+import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.my.dreamjob.model.Vacancy;

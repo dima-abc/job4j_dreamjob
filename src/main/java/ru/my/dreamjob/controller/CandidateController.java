@@ -1,13 +1,12 @@
 package ru.my.dreamjob.controller;
 
-import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.my.dreamjob.model.Candidate;
 import ru.my.dreamjob.service.CandidateService;
-import ru.my.dreamjob.service.SimpleCandidateService;
+import ru.my.dreamjob.service.CityService;
 
 /**
  * 3. Мидл
@@ -27,9 +26,12 @@ import ru.my.dreamjob.service.SimpleCandidateService;
 @ThreadSafe
 public class CandidateController {
     private final CandidateService candidateService;
+    private final CityService cityService;
 
-    public CandidateController(CandidateService candidateService) {
+    public CandidateController(CandidateService candidateService,
+                               CityService cityService) {
         this.candidateService = candidateService;
+        this.cityService = cityService;
     }
 
     @GetMapping
@@ -39,7 +41,8 @@ public class CandidateController {
     }
 
     @GetMapping("create")
-    public String getCreationPageCandidate() {
+    public String getCreationPageCandidate(Model model) {
+        model.addAttribute("cities", cityService.findAll());
         return "candidates/create";
     }
 
@@ -56,6 +59,7 @@ public class CandidateController {
             model.addAttribute("message", "Кандидат с указанным идентификатором не найдена");
             return "errors/404";
         }
+        model.addAttribute("cities", cityService.findAll());
         model.addAttribute("candidate", candidateOptional.get());
         return "candidates/one";
     }
