@@ -1,6 +1,5 @@
 package ru.my.dreamjob.repository;
 
-import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.my.dreamjob.model.Vacancy;
@@ -28,19 +27,19 @@ public class MemoryVacancyRepository implements VacancyRepository {
     private final Map<Integer, Vacancy> vacancies = new ConcurrentHashMap<>();
 
     public MemoryVacancyRepository() {
-        save(new Vacancy(0, "Intern Java Developer", "Description intern JOB Java", true, 1));
-        save(new Vacancy(0, "Junior Java Developer", "Description Junior JOB Java Developer", false, 2));
-        save(new Vacancy(0, "Junior+ Java Developer", "Description Junior+ JOB Java Developer", true, 3));
-        save(new Vacancy(0, "Middle Java Developer", "Description Middle JOB Java Developer", false, 1));
-        save(new Vacancy(0, "Middle+ Java Developer", "Description Middle+ JOB Java Developer", true, 2));
-        save(new Vacancy(0, "Senior Java Developer", "Description Senior JOB Java Developer", false, 3));
+        save(new Vacancy(0, "Intern Java Developer", "Description intern JOB Java", true, 1, 0));
+        save(new Vacancy(0, "Junior Java Developer", "Description Junior JOB Java Developer", false, 2, 0));
+        save(new Vacancy(0, "Junior+ Java Developer", "Description Junior+ JOB Java Developer", true, 3, 0));
+        save(new Vacancy(0, "Middle Java Developer", "Description Middle JOB Java Developer", false, 1, 0));
+        save(new Vacancy(0, "Middle+ Java Developer", "Description Middle+ JOB Java Developer", true, 2, 0));
+        save(new Vacancy(0, "Senior Java Developer", "Description Senior JOB Java Developer", false, 3, 0));
     }
 
     @Override
     public Vacancy save(Vacancy vacancy) {
         return vacancies.computeIfAbsent(nextId.incrementAndGet(),
                 key -> new Vacancy(key, vacancy.getTitle(), vacancy.getDescription(),
-                        vacancy.getVisible(), vacancy.getCityId()));
+                        vacancy.getVisible(), vacancy.getCityId(), vacancy.getFileId()));
     }
 
     @Override
@@ -57,7 +56,8 @@ public class MemoryVacancyRepository implements VacancyRepository {
                         vacancy.getTitle(),
                         vacancy.getDescription(),
                         vacancy.getVisible(),
-                        vacancy.getCityId())
+                        vacancy.getCityId(),
+                        vacancy.getFileId())
         ) != null;
     }
 

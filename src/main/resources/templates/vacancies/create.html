@@ -34,11 +34,15 @@
         </div>
     </nav>
     <div class="container">
-        <form class="mt-3" th:action="@{/vacancies/create}" method="post">
+        <form class="mt-3" th:action="@{/vacancies/create}" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="title" class="form-label"><b>Название</b></label>
                 <input type="text" class="form-control" id="title" name="title"
                        placeholder="Предлагаемая должность, например, Ведущий Java разработчик">
+            </div>
+            <div class="md-3">
+                <label for="formFile"><b>Фото</b></label>
+                <input class="from-control from-control-sm w-100" type="file" id="formFile", name="file" required>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label"><b>Описание</b></label>
@@ -48,7 +52,7 @@
             <div class="mb-3">
                 <label for="city"><b>Город</b></label>
                 <select class="form-control" id="city" name="cityId">
-                    <option th:each="city : ${cities}" th:value="${city}" th:text="${city.name}"></option>
+                    <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
                 </select>
             </div>
             <div class="form-check mb-3">

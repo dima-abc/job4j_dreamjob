@@ -4,6 +4,7 @@ import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.my.dreamjob.model.Vacancy;
+import ru.my.dreamjob.model.dto.FileDto;
 import ru.my.dreamjob.repository.VacancyRepository;
 
 import java.util.Collection;
@@ -21,27 +22,49 @@ import java.util.Optional;
  * @since 10.01.2023
  */
 @Service
-@ThreadSafe
 public class SimpleVacancyService implements VacancyService {
     private final VacancyRepository vacancyRepository;
 
-    public SimpleVacancyService(VacancyRepository vacancyRepository) {
+    private final FileService fileService;
+
+    public SimpleVacancyService(VacancyRepository vacancyRepository, FileService fileService) {
         this.vacancyRepository = vacancyRepository;
+        this.fileService = fileService;
+    }
+
+    private void saveNewFile(Vacancy vacancy, FileDto image) {
+        var file = fileService.save(image);
+        vacancy.setFileId(file.getId());
     }
 
     @Override
-    public Vacancy save(Vacancy vacancy) {
+    public Vacancy save(Vacancy vacancy, FileDto image) {
+        saveNewFile(vacancy, image);
         return vacancyRepository.save(vacancy);
     }
 
     @Override
     public boolean deleteById(int id) {
-        return vacancyRepository.deleteById(id);
+        var vacancyOptional = findById(id);
+        if (vacancyOptional.isEmpty()) {
+            return false;
+        }
+        var isDeleted = vacancyRepository.deleteById(id);
+        fileService.deleteById(vacancyOptional.get().getFileId());
+        return isDeleted;
     }
 
     @Override
-    public boolean update(Vacancy vacancy) {
-        return vacancyRepository.update(vacancy);
+    public boolean update(Vacancy vacancy, FileDto image) {
+        var isNewFileEmpty = image.getContent().length == 0;
+        if (isNewFileEmpty) {
+            return vacancyRepository.update(vacancy);
+        }
+        var oldFileId = vacancy.getFileId();
+        saveNewFile(vacancy, image);
+        var isUpdate = vacancyRepository.update(vacancy);
+        fileService.deleteById(oldFileId);
+        return isUpdate;
     }
 
     @Override
