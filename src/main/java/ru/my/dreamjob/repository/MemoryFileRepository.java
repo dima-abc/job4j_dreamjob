@@ -1,6 +1,5 @@
 package ru.my.dreamjob.repository;
 
-import org.springframework.stereotype.Repository;
 import ru.my.dreamjob.model.File;
 
 import java.util.Map;
@@ -18,7 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Dmitry Stepanov, user Dmitry
  * @since 30.01.2023
  */
-@Repository
 public class MemoryFileRepository implements FileRepository {
     private final AtomicInteger nextId = new AtomicInteger(0);
     private final Map<Integer, File> files = new ConcurrentHashMap<>();

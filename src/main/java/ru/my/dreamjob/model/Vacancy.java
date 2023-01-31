@@ -1,6 +1,7 @@
 package ru.my.dreamjob.model;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -37,6 +38,16 @@ public class Vacancy {
         this.cityId = cityId;
         this.fileId = fileId;
     }
+
+    public static final Map<String, String> COLUMN_MAPPING = Map.of(
+            "id", "id",
+            "title", "title",
+            "description", "description",
+            "creation_date", "createDate",
+            "visible", "visible",
+            "city_id", "cityId",
+            "file_id", "fileId"
+    );
 
     public int getId() {
         return id;

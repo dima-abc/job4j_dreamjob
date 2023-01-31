@@ -1,6 +1,5 @@
 package ru.my.dreamjob.repository;
 
-import org.springframework.stereotype.Repository;
 import ru.my.dreamjob.model.City;
 
 import java.util.Collection;
@@ -18,7 +17,6 @@ import java.util.Map;
  * @author Dmitry Stepanov, user Dmitry
  * @since 11.01.2023
  */
-@Repository
 public class MemoryCityRepository implements CityRepository {
     private final Map<Integer, City> cities = new HashMap<>() {
         {
