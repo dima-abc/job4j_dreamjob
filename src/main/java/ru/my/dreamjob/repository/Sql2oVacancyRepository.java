@@ -23,6 +23,7 @@ public class Sql2oVacancyRepository implements VacancyRepository {
 
     public Sql2oVacancyRepository(Sql2o sql2o) {
         this.sql2o = sql2o;
+        this.sql2o.setDefaultColumnMappings(Vacancy.COLUMN_MAPPING);
     }
 
     @Override
@@ -82,9 +83,7 @@ public class Sql2oVacancyRepository implements VacancyRepository {
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("SELECT * FROM vacancies WHERE id = :id")
                     .addParameter("id", id);
-            var vacancy = query
-                    .setColumnMappings(Vacancy.COLUMN_MAPPING)
-                    .executeAndFetchFirst(Vacancy.class);
+            var vacancy = query.executeAndFetchFirst(Vacancy.class);
             return Optional.ofNullable(vacancy);
         }
     }
@@ -93,7 +92,7 @@ public class Sql2oVacancyRepository implements VacancyRepository {
     public Collection<Vacancy> findAll() {
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("SELECT * FROM vacancies");
-            return query.setColumnMappings(Vacancy.COLUMN_MAPPING).executeAndFetch(Vacancy.class);
+            return query.executeAndFetch(Vacancy.class);
         }
     }
 }
