@@ -1,6 +1,7 @@
 package ru.my.dreamjob.model;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,7 +21,7 @@ public class Candidate {
     private String description;
     private int cityId;
     private int fileId;
-    private LocalDateTime createDate = LocalDateTime.now().withNano(0);
+    private LocalDateTime createDate = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
 
     public static final Map<String, String> COLUMN_MAPPING = Map.of(
             "id", "id",
