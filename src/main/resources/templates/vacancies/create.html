@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Введение в Java - разработку</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -23,12 +22,15 @@
         <div class="container">
             <a class="navbar-brand" href="/">Му DreamJob</a>
             <div class="collapse navbar-collapse">
-                <div class="navbar-nav">
+                <div class="navbar-nav me-auto">
                     <a class="nav-item nav-link" href="/">Главная</a>
                     <a class="nav-item nav-link" th:href="@{/vacancies}">Вакансии</a>
                     <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
                     <a class="nav-item nav-link active" th:href="@{/vacancies/create}">Создать вакансию</a>
                     <a class="nav-item nav-link" th:href="@{/candidates/create}">Создать кандидата</a>
+                </div>
+                <div class="d-flex">
+                    <a class="nav-link text-secondary" th:href="@{/users/register}">Регистрация</a>
                 </div>
             </div>
         </div>
@@ -42,7 +44,7 @@
             </div>
             <div class="md-3">
                 <label for="formFile"><b>Фото</b></label>
-                <input class="from-control from-control-sm w-100" type="file" id="formFile", name="file" required>
+                <input class="from-control from-control-sm w-100" type="file" id="formFile" name="file" required>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label"><b>Описание</b></label>

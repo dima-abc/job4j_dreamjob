@@ -1,7 +1,5 @@
 package ru.my.dreamjob.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +25,6 @@ import ru.my.dreamjob.service.VacancyService;
 @Controller
 @RequestMapping("/vacancies")
 public class VacancyController {
-    private static final Logger LOG = LoggerFactory.getLogger(VacancyController.class.getSimpleName());
     private final VacancyService vacancyService;
     private final CityService cityService;
 
