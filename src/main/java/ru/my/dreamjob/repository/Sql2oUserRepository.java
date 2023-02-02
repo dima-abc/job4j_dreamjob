@@ -31,9 +31,9 @@ public class Sql2oUserRepository implements UserRepository {
                     INSERT INTO users(email, name, password) 
                     VALUES(:email, :name, :password)
                     """;
-            var query = connection.createQuery(sql, true);
-            query.addParameter("email", user.getEmail())
-                    .addParameter("user", user.getName())
+            var query = connection.createQuery(sql, true)
+                    .addParameter("email", user.getEmail())
+                    .addParameter("name", user.getName())
                     .addParameter("password", user.getPassword());
             int generateId = query.executeUpdate().getKey(Integer.class);
             user.setId(generateId);
@@ -58,17 +58,15 @@ public class Sql2oUserRepository implements UserRepository {
         }
     }
 
-    @Override
-    public boolean deleteById(int id) {
+    public boolean deleteByEmail(String email) {
         try (var connection = sql2o.open()) {
-            var query = connection.createQuery("DELETE FROM users WHERE id = :id")
-                    .addParameter("id", id);
+            var query = connection.createQuery("DELETE FROM users WHERE email = :email")
+                    .addParameter("email", email);
             int affectedRows = query.executeUpdate().getResult();
             return affectedRows > 0;
         }
     }
 
-    @Override
     public Collection<User> findAll() {
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("SELECT * FROM users");
