@@ -5,9 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.my.dreamjob.model.Candidate;
+import ru.my.dreamjob.model.User;
 import ru.my.dreamjob.model.dto.FileDto;
 import ru.my.dreamjob.service.CandidateService;
 import ru.my.dreamjob.service.CityService;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * 3. Мидл
@@ -35,13 +38,25 @@ public class CandidateController {
     }
 
     @GetMapping
-    public String getAllCandidate(Model model) {
+    public String getAllCandidate(Model model, HttpSession session) {
+        var user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
         model.addAttribute("candidates", candidateService.findAll());
         return "candidates/list";
     }
 
     @GetMapping("create")
-    public String getCreationPageCandidate(Model model) {
+    public String getCreationPageCandidate(Model model, HttpSession session) {
+        var user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
         model.addAttribute("cities", cityService.findAll());
         return "candidates/create";
     }
@@ -61,12 +76,19 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}")
-    public String getByIdCandidate(Model model, @PathVariable int id) {
+    public String getByIdCandidate(Model model, @PathVariable int id,
+                                   HttpSession session) {
         var candidateOptional = candidateService.findById(id);
         if (candidateOptional.isEmpty()) {
             model.addAttribute("message", "Кандидат с указанным идентификатором не найдена");
             return "errors/404";
         }
+        var user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
         model.addAttribute("cities", cityService.findAll());
         model.addAttribute("candidate", candidateOptional.get());
         return "candidates/one";
