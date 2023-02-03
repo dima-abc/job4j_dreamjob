@@ -4,13 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.my.dreamjob.model.User;
 import ru.my.dreamjob.model.Vacancy;
 import ru.my.dreamjob.model.dto.FileDto;
 import ru.my.dreamjob.service.CityService;
 import ru.my.dreamjob.service.VacancyService;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * 3. Мидл
@@ -38,25 +35,13 @@ public class VacancyController {
     }
 
     @GetMapping
-    public String getAllVacancy(Model model, HttpSession session) {
-        var user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+    public String getAllVacancy(Model model) {
         model.addAttribute("vacancies", vacancyService.findAll());
         return "vacancies/list";
     }
 
     @GetMapping("/create")
-    public String getCreationPageVacancy(Model model, HttpSession session) {
-        var user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+    public String getCreationPageVacancy(Model model) {
         model.addAttribute("cities", cityService.findAll());
         return "vacancies/create";
     }
@@ -76,19 +61,12 @@ public class VacancyController {
     }
 
     @GetMapping("/{id}")
-    public String getByIdVacancy(Model model, @PathVariable int id,
-                                 HttpSession session) {
+    public String getByIdVacancy(Model model, @PathVariable int id) {
         var vacancyOptional = vacancyService.findById(id);
         if (vacancyOptional.isEmpty()) {
             model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
             return "errors/404";
         }
-        var user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
         model.addAttribute("cities", cityService.findAll());
         model.addAttribute("vacancy", vacancyOptional.get());
         return "vacancies/one";
