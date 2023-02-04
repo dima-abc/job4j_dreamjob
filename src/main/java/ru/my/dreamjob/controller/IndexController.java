@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @since 21.12.2022
  */
 @Controller
-public class IndexControl {
+public class IndexController {
     @GetMapping({"/", "/index"})
-    public String getIndex(Model model) {
+    public String getIndex() {
         return "index";
     }
 }
