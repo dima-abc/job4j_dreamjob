@@ -49,7 +49,7 @@ public class VacancyControllerTest {
     @Test
     public void whenRequestVacancyListPageThenGetPageWithVacancies() {
         var vacancy1 = new Vacancy(1, "test1", "desc1", true, 1, 2);
-        var vacancy2 = new Vacancy(1, "test2", "desc2", false, 3, 4);
+        var vacancy2 = new Vacancy(2, "test2", "desc2", false, 3, 4);
         var expectedVacancies = List.of(vacancy1, vacancy2);
         when(vacancyService.findAll()).thenReturn(expectedVacancies);
 
