@@ -1,3 +1,7 @@
+
+[![Java CI with Maven](https://github.com/Dima-Stepanov/my_dreamjob/actions/workflows/maven.yml/badge.svg)](https://github.com/Dima-Stepanov/my_dreamjob/actions/workflows/maven.yml)
+[![codecov](https://codecov.io/gh/Dima-Stepanov/my_dreamjob/branch/master/graph/badge.svg?token=CZPUaHNoWs)](https://codecov.io/gh/Dima-Stepanov/my_dreamjob)
+
 <h1>Проект "Работа мечты"</h1>
 
 В этом блоке мы поговорим о создании веб приложений на языка Java.<br>

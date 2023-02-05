@@ -13,7 +13,6 @@ import java.util.Properties;
 
 import static java.util.Collections.emptyList;
 import static java.util.Optional.empty;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 /**
@@ -106,6 +105,13 @@ class Sql2oCandidateRepositoryTest {
         var savedCandidate = sql2oCandidateRepository.findById(candidate.getId());
         assertThat(isDeleted).isTrue();
         assertThat(savedCandidate).isEqualTo(empty());
+    }
+
+    @Test
+    public void whenDeleteThenFalse() {
+        var candidate = new Candidate(0, "name", "description", 3, file.getId());
+        var isDeleted = sql2oCandidateRepository.deleteById(candidate.getId());
+        assertThat(isDeleted).isFalse();
     }
 
     @Test
