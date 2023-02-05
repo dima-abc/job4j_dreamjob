@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.my.dreamjob.model.User;
 import ru.my.dreamjob.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -32,21 +31,18 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model model) {
+    public String getLoginPage() {
         return "users/login";
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute User user, Model model,
-                            HttpServletRequest request) {
+    public String loginUser(@ModelAttribute User user, Model model) {
         var userOptional = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if (userOptional.isEmpty()) {
             model.addAttribute("error", "Почта или пароль введены не верно");
             return "users/login";
         }
-        var session = request.getSession();
-        session.setAttribute("user", userOptional.get());
-        return "redirect:/vacancies";
+        return "redirect:/index";
     }
 
     @GetMapping("/register")
