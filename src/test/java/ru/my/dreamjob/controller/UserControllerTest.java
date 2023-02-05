@@ -6,6 +6,7 @@ import org.springframework.ui.ConcurrentModel;
 import ru.my.dreamjob.model.User;
 import ru.my.dreamjob.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.util.Optional;
@@ -25,12 +26,16 @@ import static org.mockito.Mockito.*;
  */
 public class UserControllerTest {
     private UserService userService;
+    private HttpServletRequest httpServletRequest;
+    private HttpSession httpSession;
     private UserController userController;
 
 
     @BeforeEach
     public void initService() {
         userService = mock(UserService.class);
+        httpServletRequest = mock(HttpServletRequest.class);
+        httpSession = mock(HttpSession.class);
         userController = new UserController(userService);
     }
 
@@ -46,9 +51,10 @@ public class UserControllerTest {
         var user = new User(1, "mail", "name", "123");
         when(userService.findByEmailAndPassword(user.getEmail(), user.getPassword()))
                 .thenReturn(Optional.of(user));
+        when(httpServletRequest.getSession()).thenReturn(httpSession);
 
         var model = new ConcurrentModel();
-        var view = userController.loginUser(user, model);
+        var view = userController.loginUser(user, model, httpServletRequest);
 
         assertThat(view).isEqualTo("redirect:/index");
     }
@@ -59,9 +65,10 @@ public class UserControllerTest {
         var user = new User(22, "mail22", "name22", "pass22");
         when(userService.findByEmailAndPassword(user.getEmail(), user.getPassword()))
                 .thenReturn(Optional.empty());
+        when(httpServletRequest.getSession()).thenReturn(httpSession);
 
         var model = new ConcurrentModel();
-        var view = userController.loginUser(user, model);
+        var view = userController.loginUser(user, model, httpServletRequest);
         var actualMessage = model.getAttribute("error");
 
         assertThat(view).isEqualTo("users/login");
