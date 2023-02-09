@@ -90,7 +90,7 @@ public class VacancyController {
         }
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(Model model, @PathVariable int id) {
         var isDeleted = vacancyService.deleteById(id);
         if (!isDeleted) {
